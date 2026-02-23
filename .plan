@@ -1,0 +1,99 @@
+# hplc-analyst — Project Plan
+
+## Overview
+A Python + FastAPI web application providing an AI-powered pharmaceutical HPLC analysis assistant, backed by the Claude API (Anthropic). The system prompt you provided will serve as the core persona for the LLM.
+
+## Project Location
+`/Users/paulbalas/Desktop/Projects/hplc-analyst`
+
+## Tech Stack
+- **Language:** Python 3.11+
+- **Framework:** FastAPI (async, high-performance)
+- **LLM:** Anthropic Claude API (claude-sonnet-4-20250514 default, claude-haiku-4-5-20251001 for fast tasks)
+- **Frontend:** Minimal chat UI (HTML + Tailwind CSS + vanilla JS) — served by FastAPI's static files
+- **Package Manager:** `uv` (fast Python package manager) with `pyproject.toml`
+- **Environment:** `.env` for API keys (git-ignored)
+
+## Project Structure
+```
+hplc-analyst/
+├── app/
+│   ├── __init__.py
+│   ├── main.py              # FastAPI app, CORS, static files, startup
+│   ├── config.py            # Settings via pydantic-settings (.env loading)
+│   ├── routers/
+│   │   ├── __init__.py
+│   │   └── chat.py          # POST /api/chat — streaming chat endpoint
+│   ├── services/
+│   │   ├── __init__.py
+│   │   └── claude.py        # Anthropic SDK wrapper, system prompt loading
+│   ├── prompts/
+│   │   └── system.md        # The HPLC expert system prompt (your prompt text)
+│   └── models/
+│       ├── __init__.py
+│       └── schemas.py       # Pydantic request/response models
+├── static/
+│   ├── index.html           # Chat UI
+│   ├── app.js               # Chat logic (fetch + SSE streaming)
+│   └── styles.css           # Minimal custom styles (Tailwind via CDN)
+├── tests/
+│   ├── __init__.py
+│   ├── test_chat.py         # API endpoint tests
+│   └── test_claude.py       # Service layer tests
+├── .env.example             # Template for env vars
+├── .gitignore
+├── pyproject.toml           # Dependencies + project metadata
+└── README.md                # Setup & usage instructions
+```
+
+## Implementation Steps
+
+### 1. Scaffold project directory & git init
+- Initialize git repo
+- Create `.gitignore` (Python standard + .env)
+
+### 2. Create pyproject.toml with dependencies
+- fastapi, uvicorn[standard], anthropic, pydantic-settings, python-dotenv
+- Dev deps: pytest, httpx (for async test client)
+
+### 3. Create app/config.py
+- Pydantic Settings class loading from `.env`
+- Keys: `ANTHROPIC_API_KEY`, `MODEL_NAME` (default: claude-sonnet-4-20250514), `MAX_TOKENS` (default: 8192)
+
+### 4. Create app/prompts/system.md
+- Store the full HPLC expert system prompt as a markdown file
+- Loaded at startup by the service layer
+
+### 5. Create app/services/claude.py
+- Anthropic Python SDK client
+- `chat()` async function: takes conversation history, returns streamed response
+- System prompt injected automatically
+- Retry logic with exponential backoff on rate limits (429)
+
+### 6. Create app/models/schemas.py
+- `ChatMessage` (role, content)
+- `ChatRequest` (messages: list[ChatMessage], model: optional)
+- `ChatResponse` (content, model, usage)
+
+### 7. Create app/routers/chat.py
+- `POST /api/chat` — accepts ChatRequest, returns streaming response (SSE)
+- `GET /api/health` — health check
+
+### 8. Create app/main.py
+- FastAPI app with CORS middleware
+- Mount static files at `/`
+- Include chat router at `/api`
+
+### 9. Create static/ chat UI
+- Clean chat interface with Tailwind CSS
+- Streaming response display (SSE)
+- Conversation history maintained client-side
+- Opening message from the system prompt
+
+### 10. Create .env.example and .gitignore
+
+### 11. Create basic tests
+- Test health endpoint
+- Test chat endpoint with mocked Claude response
+
+### 12. Initial git commit
