@@ -33,3 +33,4 @@ htmlcov/
 
 # uv
 .python-version
+.vercel

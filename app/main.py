@@ -22,5 +22,6 @@ app.add_middleware(
 
 app.include_router(chat.router, prefix="/api")
 
-static_dir = Path(__file__).parent.parent / "static"
-app.mount("/", StaticFiles(directory=str(static_dir), html=True), name="static")
+static_dir = Path(__file__).parent.parent / "public"
+if static_dir.is_dir():
+    app.mount("/", StaticFiles(directory=str(static_dir), html=True), name="static")
