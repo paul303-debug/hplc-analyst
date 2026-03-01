@@ -19,18 +19,9 @@ OPENING_MESSAGE = (
 )
 
 
-def _load_system_prompt() -> str:
-    return SYSTEM_PROMPT_PATH.read_text(encoding="utf-8")
-
-
-_system_prompt: str | None = None
-
-
 def get_system_prompt() -> str:
-    global _system_prompt
-    if _system_prompt is None:
-        _system_prompt = _load_system_prompt()
-    return _system_prompt
+    """Load system prompt from disk each time (no cache) so edits take effect immediately."""
+    return SYSTEM_PROMPT_PATH.read_text(encoding="utf-8")
 
 
 _client: anthropic.AsyncAnthropic | None = None
