@@ -9,22 +9,13 @@ from app.config import settings
 SYSTEM_PROMPT_PATH = Path(__file__).parent.parent / "prompts" / "system.md"
 
 OPENING_MESSAGE = (
-    "Welcome! I'm your pharmaceutical analytical chemistry expert specializing in "
-    "Agilent 1290 Infinity II systems and drug purity testing. I support everything "
-    "from IND-phase method development through NDA submissions, all within GLP/cGMP "
-    "frameworks.\n\n"
-    "I can help you with:\n"
-    "- **Impurity profiling** \u2013 Identifying and characterizing organic, inorganic, "
-    "or elemental impurities\n"
-    "- **Method development & validation** \u2013 Optimizing HPLC/UPLC/LC-MS methods for "
-    "pharmaceutical analysis\n"
-    "- **Stability studies** \u2013 Interpreting degradation data and forced degradation "
-    "results\n"
-    "- **Instrument troubleshooting** \u2013 Resolving Agilent 1290/LC-MS performance "
-    "issues\n"
-    "- **Regulatory compliance** \u2013 Ensuring USP, ICH, and GMP requirements are met\n\n"
-    "What can I assist you with today? Please share details about your analysis, any "
-    "issues you're experiencing, or questions about your method or instrument."
+    "HPLC Analyst ready. Agilent 1290 / LC-MS expert, GLP/cGMP.\n\n"
+    "- **Impurity profiling** \u2013 identification, quantification, ICH thresholds\n"
+    "- **Method dev & validation** \u2013 HPLC/UPLC/LC-MS optimization\n"
+    "- **Stability studies** \u2013 degradation, forced stress, trending\n"
+    "- **Instrument troubleshooting** \u2013 pressure, baseline, sensitivity\n"
+    "- **Regulatory** \u2013 USP, ICH, 21 CFR Part 11\n\n"
+    "What's the issue or question?"
 )
 
 

@@ -50,7 +50,7 @@ function appendMessage(role, content) {
 
   const body = document.createElement("div");
   body.className = "message-content text-gray-800";
-  body.innerHTML = renderMarkdown(content);
+  body.innerHTML = renderDiagrams(renderMarkdown(content));
 
   bubble.appendChild(label);
   bubble.appendChild(body);
@@ -178,7 +178,7 @@ chatForm.addEventListener("submit", async (e) => {
           } else if (data.content) {
             fullResponse += data.content;
           }
-          streamBody.innerHTML = renderMarkdown(fullResponse);
+          streamBody.innerHTML = renderDiagrams(renderMarkdown(fullResponse));
           scrollToBottom();
         } catch {
           // skip malformed JSON
@@ -187,7 +187,7 @@ chatForm.addEventListener("submit", async (e) => {
     }
   } catch (err) {
     fullResponse += `\n\n**Connection error:** ${err.message}`;
-    streamBody.innerHTML = renderMarkdown(fullResponse);
+    streamBody.innerHTML = renderDiagrams(renderMarkdown(fullResponse));
   }
 
   // Finalize
